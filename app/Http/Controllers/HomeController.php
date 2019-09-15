@@ -33,6 +33,10 @@ class HomeController extends Controller
     }
 
     public function imgShow($directory, $image){
-        return Storage::disk('pictures')->download($directory. '/' .$image);
+        $user = Auth::User();
+        if($user->encrypted_id == $directory){
+            return Storage::disk('pictures')->download($directory. '/' .$image);
+        }
+        return redirect()->route('home');
     }
 }
